@@ -1,29 +1,24 @@
-const { Vin, Region, RegionVin } = require("./models"); // Importer les modèles de base de données
+const { Vin, Region, RegionVin } = require("../models"); // Importer les modèles de base de données
 
 const regionController = {
   // GET all regions
-  async getAllRegions(req, res) {
-    try {
-      const regions = await Region.find();
-      res.json(regions);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Server error");
-    }
+  getAllRegions(req, res) {
+    Region.find({})
+      .select("-__v")
+      .then((regions) => res.json(regions))
+      .catch((err) => res.status(500).json(err));
   },
 
   // GET a single region by id
-  async getRegionById(req, res) {
-    try {
-      const region = await Region.findById(req.params.id).populate("vins");
-      if (!region) {
-        return res.status(404).json({ message: "Region not found" });
-      }
-      res.json(region);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Server error" });
-    }
+  getRegionById(req, res) {
+    Region.findOne({ _id: req.params.regionId })
+      // .populate("vins")
+      .then((region) =>
+        !region
+          ? res.status(404).json({ message: "Region not found" })
+          : res.json(region)
+      )
+      .catch((err) => res.status(500).json(err));
   },
 
   // POST a new region
@@ -56,22 +51,19 @@ const regionController = {
   },
 
   //DELETE a region by id
-  async deleteRegion(req, res) {
-    try {
-      // Delete the region
-      const deletedRegion = await Region.findByIdAndDelete(req.params.regionId);
-      if (!deletedRegion) {
-        return res.status(404).json({ message: "Region not found" });
-      }
-      // Delete all the wines assiociated with the region
-      await Vin.deleteMany({ region: req.params.regionId });
-      res
-        .status(200)
-        .json({ message: "Region and associated wines deleted successfully" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Server error" });
-    }
+  deleteRegion(req, res) {
+    Region.findOneAndDelete({ _id: req.params.regionId })
+      .then((region) =>
+        !region
+          ? res.status(404).json({ message: "No region with that ID" })
+          : Vin.deleteMany({ region: req.params.regionId })
+      )
+      .then(() =>
+        res.json({
+          message: "Region and associated wines deleted successfully",
+        })
+      )
+      .catch((err) => res.status(500).json(err));
   },
 };
 
