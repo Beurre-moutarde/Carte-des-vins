@@ -1,4 +1,4 @@
-const { Vin, Region, RegionVin } = require("../models"); // Importer les modèles de base de données
+const { Vin, Region } = require("../models"); // Importer les modèles de base de données
 
 const regionController = {
   // GET all regions
@@ -53,16 +53,11 @@ const regionController = {
   //DELETE a region by id
   deleteRegion(req, res) {
     Region.findOneAndDelete({ _id: req.params.regionId })
-      .then((region) =>
+      .then((region) => {
         !region
           ? res.status(404).json({ message: "No region with that ID" })
-          : Vin.deleteMany({ region: req.params.regionId })
-      )
-      .then(() =>
-        res.json({
-          message: "Region and associated wines deleted successfully",
-        })
-      )
+          : res.json(region);
+      })
       .catch((err) => res.status(500).json(err));
   },
 };

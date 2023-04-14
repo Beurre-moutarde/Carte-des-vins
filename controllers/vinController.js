@@ -1,77 +1,117 @@
-// const { Vin, RegionVin } = require('./models'); // Importer les modèles de base de données
+const { Vin } = require("../models"); // Importer les modèles de base de données
 
-// // Récupérer les détails d'un vin
-// app.get('/vins/:vinId', async (req, res) => {
-//     try {
-//       const vinId = req.params.vinId;
-//       const vin = await Vin.findById(vinId);
-//       res.json(vin);
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Erreur de serveur');
-//     }
-//   });
+const vinController = {
+  //GET all wines
+  getAllVins(req, res) {
+    Vin.find()
+      .select("-__v")
+      .then((vins) => res.json(vins))
+      .catch((err) => res.status(500).json(err));
+  },
 
-//     // Ajouter un vin à une région
-//     app.post('/regions/:regionId/vins', async (req, res) => {
-//         try {
-//           const regionId = req.params.regionId;
-//           const vin = new Vin(req.body);
-//           const savedVin = await vin.save();
-//           const regionVin = new RegionVin({ region_id: regionId, vin_id: savedVin._id });
-//           await regionVin.save();
-//           res.json(savedVin);
-//         } catch (err) {
-//           console.error(err);
-//           res.status(500).send('Erreur de serveur');
-//         }
-//       });
+  //GET a single wine
+  getVinById(req, res) {
+    Vin.findOne({ _id: req.params.vinId })
+      .then((vin) =>
+        !vin
+          ? res.status(404).json({ message: "No wine with that ID" })
+          : res.json(vin)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 
-//       // Supprimer un vin d'une région
-// app.delete('/regions/:regionId/vins/:vinId', async (req, res) => {
-//     try {
-//       const regionId = req.params.regionId;
-//       const vinId = req.params.vinId;
-//       await RegionVin.findOneAndDelete({ region_id: regionId, vin_id: vinId });
-//       await Vin.findByIdAndDelete(vinId);
-//       res.send('Vin supprimé');
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Erreur de serveur');
-//     }
-//   });
-  
-//   // Mettre à jour un vin
-//   app.put('/vins/:vinId', async (req, res) => {
-//     try {
-//       const vinId = req.params.vinId;
-//       const updatedVin = await Vin.findByIdAndUpdate(vinId, req.body, { new: true });
-//       res.json(updatedVin);
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Erreur de serveur');
-//     }
-//   });
-  
-//   // Récupérer un vin par son identifiant
-//   app.get('/vins/:vinId', async (req, res) => {
-//     try {
-//       const vinId = req.params.vinId;
-//       const vin = await Vin.findById(vinId);
-//       res.json(vin);
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Erreur de serveur');
-//     }
-//   });
-  
-//   // Lister tous les vins
-//   app.get('/vins', async (req, res) => {
-//     try {
-//       const vins = await Vin.find();
-//       res.json(vins);
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send('Erreur de serveur');
-//     }
-//   });
+  //POST a new wine
+  createVin(req, res) {
+    Vin.create(req.body)
+      .then((vin) => res.json(vin))
+      .catch((err) => res.status(500).json(err));
+  },
+
+  //Put to update a wine by id
+  updateVin({ params, body }, res) {
+    Vin.findOneAndUpdate({ _id: params.vinId }, body, {
+      new: true,
+      runValidators: true,
+    })
+      .then((vin) => {
+        !vin
+          ? res.status(404).json({ message: "No Wine found with this id!" })
+          : res.json(vin);
+      })
+      .catch((err) => res.json(err));
+  },
+  //DELETE to remove a wine by id
+  deleteVin(req, res) {
+    Vin.findOneAndDelete({ _id: req.params.vinId })
+      .then((vin) => {
+        !vin
+          ? res.status(404).json({ message: "No wine with that ID" })
+          : res.json(vin);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+
+  //PUT/Add an avis to a wine by updating wine
+  addAvis({ params }, res) {
+    Vin.findOneAndUpdate(
+      { _id: params.vinId },
+      { $push: { avis: params.avisId } },
+      { new: true }
+    )
+      .then((vin) => {
+        !vin
+          ? res.status(404).json({ message: "No wine found with this id" })
+          : res.json(vin);
+      })
+      .catch((err) => res.status(500).json(err));
+  },
+
+  //Delete an avis by updating wine
+  deleteAvis({ params }, res) {
+    Vin.findOneAndDelete(
+        { _id: params.vinId },
+        { $pull: { avis: params.avisId } },
+        { new: true }
+    )
+    .then((vin) => {
+        !vin
+          ? res.status(400).json({ message: "No wine found with this id" })
+          : res.json(vin);
+    })
+    .catch((err) => res.status(500).json(err));
+  },
+};
+
+module.exports = vinController;
+
+// // Ajouter un vin à une région
+// app.post("/regions/:regionId/vins", async (req, res) => {
+//   try {
+//     const regionId = req.params.regionId;
+//     const vin = new Vin(req.body);
+//     const savedVin = await vin.save();
+//     const regionVin = new RegionVin({
+//       region_id: regionId,
+//       vin_id: savedVin._id,
+//     });
+//     await regionVin.save();
+//     res.json(savedVin);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Erreur de serveur");
+//   }
+// });
+
+// // Supprimer un vin d'une région
+// app.delete("/regions/:regionId/vins/:vinId", async (req, res) => {
+//   try {
+//     const regionId = req.params.regionId;
+//     const vinId = req.params.vinId;
+//     await RegionVin.findOneAndDelete({ region_id: regionId, vin_id: vinId });
+//     await Vin.findByIdAndDelete(vinId);
+//     res.send("Vin supprimé");
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Erreur de serveur");
+//   }
+// });
