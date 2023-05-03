@@ -1,0 +1,32 @@
+[
+    {
+        "firstName": "Jim",
+        "lastName": "halpert",
+        "email": "jim.halpert@example.com",
+        "password": "Password123"
+    },
+    {
+        "firstName": "Pam",
+        "lastName": "Beesly",
+        "email": "pam.beesly@example.com",
+        "password": "Password456"
+    },
+    {
+        "firstName": "Dwight",
+        "lastName": "Schrute",
+        "email": "dwight.schrute@example.com",
+        "password": "Password789"
+    },
+    {
+        "firstName": "Michael",
+        "lastName": "Scott",
+        "email": "michael.scott@example.com",
+        "password": "Passwordabc1"
+    },
+    {
+        "firstName": "Andy",
+        "lastName": "Bernard",
+        "email": "andy.bernard@example.com",
+        "password": "Passworddef1"
+    }
+]
