@@ -29,9 +29,9 @@ const typeDefs = gql`
       }
 
     type Query {
-        regions: [Region!]
-        vins: [Vin!]
-        users: [User!]
+        regions: [Region]
+        vins: [Vin]
+        users: [User]
     }
 
     type Mutation {

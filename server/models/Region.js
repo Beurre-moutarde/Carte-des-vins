@@ -1,21 +1,17 @@
-// Importer Mongoose
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-// Définir le schéma pour la collection "Regions"
+const { Schema } = mongoose;
+const Vin = require('./Vin');
+
 const regionSchema = new Schema({
   region_name: { 
     type: String, 
     required: true 
   },
-  vin: [
-    { 
-      type: Schema.Types.ObjectId, 
-      ref: "Vin" 
-    }
-  ],
+  vins: [Vin.schema]
 });
 
 // Initialise Region Model
-const Region = model("Region", regionSchema);
+const Region = mongoose.model('Region', regionSchema);
 
 module.exports = Region;

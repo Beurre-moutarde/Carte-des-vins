@@ -1,5 +1,5 @@
-// Importer Mongoose
-const { Schema, model } = require("mongoose");
+const mongoose = require('mongoose');
+const { Schema } = require("mongoose");
 
 // Définir le schéma pour la collection "Vins"
 const vinSchema = new Schema(
@@ -21,16 +21,10 @@ const vinSchema = new Schema(
       ref: "Region"
     }
   },
-  {
-    toJSON: {
-      virtuals: true,
-    },
-    id: false,
-  }
 );
 
 
 // Initialise Vin model
-const Vin = model("Vin", vinSchema);
+const Vin = mongoose.model("Vin", vinSchema);
 
 module.exports = Vin;

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_REGION = gql`
-  query region {
-    region {
+  query regions {
+    regions {
       _id
       region_name
     }
@@ -10,8 +10,8 @@ export const QUERY_REGION = gql`
 `;
 
 export const QUERY_VIN = gql`
-  query vin {
-    vin {
+  query vins {
+    vins {
       _id
       vin_name
       millesime
@@ -21,8 +21,8 @@ export const QUERY_VIN = gql`
 `;
 
 export const QUERY_USER = gql`
-  query user {
-    user {
+  query users {
+    users {
         _id
         firstname
         lastname
