@@ -84,7 +84,7 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    removeVin: async (parent, { vinId }, context) => {
+    deleteVin: async (parent, { vinId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },

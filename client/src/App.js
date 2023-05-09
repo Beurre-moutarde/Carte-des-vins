@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Layout, Menu, Modal } from 'antd';
 import Home from './pages/Home';
-import SignupForm from './components/SignUpForm';
+import SignupForm from './pages/SignUpForm'
 import LoginForm from './components/LoginForm';
 import Profile from "./pages/Profile"
 

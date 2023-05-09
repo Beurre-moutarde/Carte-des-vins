@@ -24,13 +24,13 @@ const typeDefs = gql`
     type Auth {
         token: ID
         user: User
-      }
+    }
 
     type Params {
         params: String!
     }  
 
-    type VinInput {
+    input VinInput {
         vinId: String!
         vin_name: String!
         millesime: Int
@@ -43,8 +43,6 @@ const typeDefs = gql`
 
     type Query {
         me: User
-    }
-    type Query {
         params: [Data]
     }
 
@@ -52,7 +50,7 @@ const typeDefs = gql`
         login(email: String!, password: String!): Auth
         createUser(username: String! email: String!, password: String!): Auth
         saveVin(input: VinInput): User
-        deleteVin(input vinId: String!): User
+        deleteVin(input: VinInput): User
         saveData(input: DataObj): User
         deleteData(dataID: ID): User
     }
