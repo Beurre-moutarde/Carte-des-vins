@@ -31,26 +31,35 @@ const resolvers = {
       const vin = await Vin.create({ vin_name, millesime, producteur });
       return vin;
     },
+    updateVin: async (parent, { vin_id, vin_name, millesime, producteur }) => {
+      const vin = await Vin.findByIdAndUpdate(vin_id, { vin_name, millesime, producteur }, { new: true });
+      return vin;
+    },
+    deleteVin: async (parent, { vin_id }) => {
+      const vin = await Vin.findByIdAndDelete(vin_id);
+      return vin;
+    },
     createUser: async (parent, { firstname, lastname, email }) => {
       const user = await User.create({ firstname, lastname, email });
       return user;
     },
-    // login: async (parent, { email, password }) => {
-    //   const user = await User.findOne({ email });
-    //   // check if user exists with email and credentials
-    //   if (!user) {
-    //     throw new AuthenticationError("Incorrect credentials");
-    //   }
-    //   const correctPassword = await user.isCorrectPassword(password);
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      // check if user exists with email and credentials
+      console.log(user, email);
+      if (!user) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
+      const correctPassword = await user.isCorrectPassword(password);
 
-    //   // check password
-    //   if (!correctPassword) {
-    //     throw new AuthenticationError("Incorrect credentials");
-    //   }
+      // check password
+      if (!correctPassword) {
+        throw new AuthenticationError("Incorrect credentials");
+      }
 
-    //   const token = signToken(user);
-    //   return { token, user };
-    // },
+      const token = signToken(user);
+      return { token, user };
+    },
   },
 };
 

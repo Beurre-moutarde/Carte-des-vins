@@ -7,15 +7,15 @@ const vinData = require("./vinData.json");
 
 db.once("open", async () => {
   await User.deleteMany({});
-  const users = await User.insertMany(userData);
+  const users = await User.create(userData);
   console.log("Users seeded!");
 
   await Region.deleteMany({});
-  const regions = await Region.insertMany(regionData);
+  const regions = await Region.create(regionData);
   console.log("Regions seeded!");
 
   await Vin.deleteMany({});
-  const vins = await Vin.insertMany(vinData);
+  const vins = await Vin.create(vinData);
   console.log("Vins seeded!");
 
   process.exit(0);

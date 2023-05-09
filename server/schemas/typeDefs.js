@@ -38,8 +38,9 @@ const typeDefs = gql`
         createRegion(region_name: String!): Region
         createVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
         createUser(firstname: String!, lastname: String! email: String!, password: String!): Auth
+        updateVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
+        deleteVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
         login(email: String!, password: String!): Auth
-        updateUser(firstName: String, lastName: String, email: String, password: String): User
     }
 `;
 
