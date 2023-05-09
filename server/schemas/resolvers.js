@@ -1,47 +1,60 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User, Region, Vin } = require("../models");
+const { User, Data } = require("../models");
 const { signToken } = require("../utils/auth");
+const mongoose = require("mongoose");
 
 const resolvers = {
   Query: {
-    regions: async () => {
-      return await Region.find();
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+        return userData;
+      }
+      throw new AuthenticationError("Not logged in");
     },
-    vins: async () => {
-      const vins = await Vin.find();
-      return vins.map((vin) => {
-        return {
-          _id: vin.id,
-          vin_name: vin.vin_name,
-          millesime: vin.millesime,
-          producteur: vin.producteur,
-        };
-      });
-    },
-    users: async () => {
-      return await User.find();
+
+    params: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+        return userData.savedData;
+      }
     },
   },
+
   Mutation: {
-    createRegion: async (parent, { region_name }) => {
-      const region = await Region.create({ region_name });
-      return region;
+    saveData: async (parent, { input }, context) => {
+      const params = await Data.create(input);
+      const user = await User.findByIdAndUpdate(context.user._id, {
+        $push: {
+          savedData: params,
+        },
+      });
+      return { params, user };
     },
-    createVin: async (parent, { vin_name, millesime, producteur }) => {
-      const vin = await Vin.create({ vin_name, millesime, producteur });
-      return vin;
+
+    deleteData: async (parent, { dataID }, context) => {
+      console.log(dataID);
+      console.log(context.user._id);
+      const params = await Data.deleteOne({ _id: dataID });
+      const user = await User.findByIdAndUpdate(context.user._id, {
+        $pull: {
+          savedData: {
+            _id: mongoose.Types.ObjectId(dataID),
+          },
+        },
+      });
+      return { params, user };
     },
-    updateVin: async (parent, { vin_id, vin_name, millesime, producteur }) => {
-      const vin = await Vin.findByIdAndUpdate(vin_id, { vin_name, millesime, producteur }, { new: true });
-      return vin;
-    },
-    deleteVin: async (parent, { vin_id }) => {
-      const vin = await Vin.findByIdAndDelete(vin_id);
-      return vin;
-    },
-    createUser: async (parent, { firstname, lastname, email }) => {
-      const user = await User.create({ firstname, lastname, email });
-      return user;
+
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { user, token };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -60,8 +73,29 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    saveVin: async (parent, { input }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedVins: input } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+    removeVin: async (parent, { vinId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedVinss: { vinId: vinId } } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
 };
 
 module.exports = resolvers;
-

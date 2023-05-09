@@ -1,26 +1,24 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-    type Region {
-        _id: ID!
-        region_name: String!
-        vin: [Vin]
-    }
-
     type Vin {
-        _id: ID!
+        vinId: String!
         vin_name: String!
         millesime: Int!
         producteur: String!
-        regions: [Region]
     }
 
     type User {
         _id: ID!
-        firstName: String!
-        lastName: String!
+        username: String
         email: String!
-        vins: [Vin]
+        vinCount: Int
+        savedVins: [Vin]
+    }
+    
+    type Data {
+        _id: ID
+        params: String!
     }
 
     type Auth {
@@ -28,19 +26,35 @@ const typeDefs = gql`
         user: User
       }
 
+    type Params {
+        params: String!
+    }  
+
+    type VinInput {
+        vinId: String!
+        vin_name: String!
+        millesime: Int
+        producteur: String
+    }
+
+    input DataObj {
+        params: String!
+    }
+
     type Query {
-        regions: [Region]
-        vins: [Vin]
-        users: [User]
+        me: User
+    }
+    type Query {
+        params: [Data]
     }
 
     type Mutation {
-        createRegion(region_name: String!): Region
-        createVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
-        createUser(firstname: String!, lastname: String! email: String!, password: String!): Auth
-        updateVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
-        deleteVin(vin_name: String!, millesime:Int!, producteur: String!): Vin
         login(email: String!, password: String!): Auth
+        createUser(username: String! email: String!, password: String!): Auth
+        saveVin(input: VinInput): User
+        deleteVin(input vinId: String!): User
+        saveData(input: DataObj): User
+        deleteData(dataID: ID): User
     }
 `;
 

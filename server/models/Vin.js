@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
+const userSchema = require ('./User');
 
 // Définir le schéma pour la collection "Vins"
 const vinSchema = new Schema(
@@ -16,15 +16,13 @@ const vinSchema = new Schema(
       type: String, 
       required: true 
     },
-    region: { 
+    user: { 
       type: Schema.Types.ObjectId, 
-      ref: "Region"
+      ref: "User",
+      required: true
     }
   },
 );
 
 
-// Initialise Vin model
-const Vin = mongoose.model("Vin", vinSchema);
-
-module.exports = Vin;
+module.exports = vinSchema;

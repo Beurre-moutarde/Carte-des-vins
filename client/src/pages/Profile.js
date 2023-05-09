@@ -1,4 +1,6 @@
 import React from 'react';
+import  {useQuery, useMutation } from '@apollo/client';
+import { QUERY_VIN } from '../utils/queries';
 
 export default function Profile() {
     return (

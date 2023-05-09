@@ -1,33 +1,28 @@
 import { gql } from "@apollo/client";
 
-export const QUERY_REGION = gql`
-  query regions {
-    regions {
+
+export const LOAD_DATA = gql`
+  query Params {
+    params {
       _id
-      region_name
+      params
     }
-  }
-`;
+  }  
+`
 
-export const QUERY_VIN = gql`
-  query vins {
-    vins {
+export const QUERY_ME = gql`
+  {
+    me {
       _id
-      vin_name
-      millesime
-      producteur
+      firstname
+      lastname
+      email
+      savedVins {
+        vinId
+        vin_name
+        millesime
+        producteur
+      }
     }
   }
 `;
-
-export const QUERY_USER = gql`
-  query users {
-    users {
-        _id
-        firstname
-        lastname
-        email
-    }
-  }
-`;
-

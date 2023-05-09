@@ -1,20 +1,14 @@
-const mongoose = require('mongoose');
-
-const { Schema } = mongoose;
+const { Schema, model } = mongoose;
 const bcrypt = require('bcrypt');
-const Vin = require('./Vin');
+const vinSchema = require('./Vin');
+const { Data, dataSchema } = require ("./Data");
 
 
 const userSchema = new Schema({
-  firstName: {
+  username: {
     type: String,
     required: true,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
+    unique: true,
   },
   email: {
     type: String,
@@ -26,8 +20,16 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  vins: [Vin.schema]
-});
+  savedData: [dataSchema],
+},
+
+{
+  toJSON: {
+    virtuals: true,
+  },
+}
+
+);
 
 // set up pre-save middleware to create password
 userSchema.pre('save', async function(next) {
@@ -43,6 +45,10 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.isCorrectPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
+
+userSchema.virtual("vinCount").get(function() {
+  return this.savedVins.length;
+});
 
 const User = mongoose.model('User', userSchema);
 
