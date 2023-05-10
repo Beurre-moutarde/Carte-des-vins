@@ -1,10 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Layout, Menu, Modal } from 'antd';
-import Home from './pages/Home';
-import SignupForm from './pages/SignUpForm'
-import LoginForm from './components/LoginForm';
-import Profile from "./pages/Profile"
+import SearchPlants from "./pages/Searchplants";
+import SavedPlants from "./pages/Savedplants";
+import Navbar from "./components/Navbar";
 
 // import ApolloProvider
 import {
@@ -15,7 +13,6 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
-const { Header, Content, Footer } = Layout;
 // Construct main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -39,53 +36,20 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalContent, setModalContent] = useState(null);
-
-  const handleModalCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const showModal = (title, content) => {
-    setModalTitle(title);
-    setModalContent(content);
-    setIsModalVisible(true);
-  };
   return (
     <ApolloProvider client={client}>
-          <Layout>
-      <Header>
-        <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2" onClick={() => showModal('Sign Up', <SignupForm />)}>Sign Up</Menu.Item>
-          <Menu.Item key="3" onClick={() => showModal('Log In', <LoginForm />)}>Log In</Menu.Item>
-        </Menu>
-      </Header>
       <Router>
-        {/* <AppLayout> */}
+        <>
+          <Navbar />
           <Routes>
-            <Route  path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route  path="/" element={<SearchPlants/>} />
+            <Route  path="/saved" element={<SavedPlants/>} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Routes>
-        {/* </AppLayout> */}
+        </>
       </Router>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Me</Footer>
-
-      <Modal
-        title={modalTitle}
-        visible={isModalVisible}
-        onCancel={handleModalCancel}
-        footer={null}
-      >
-        {modalContent}
-      </Modal>
-    </Layout>
     </ApolloProvider>
   );
 }
 
 export default App;
-

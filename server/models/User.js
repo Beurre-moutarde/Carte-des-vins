@@ -1,7 +1,6 @@
 const { Schema, model } = require ("mongoose");
 const bcrypt = require('bcrypt');
-// const vinSchema = require('./Vin');
-const { Data, dataSchema } = require ("./Data");
+const plantSchema = require("./Plant");
 
 
 const userSchema = new Schema({
@@ -20,7 +19,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  savedData: [dataSchema],
+  savedPlants: [plantSchema],
 },
 
 {
@@ -46,9 +45,10 @@ userSchema.methods.isCorrectPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual("vinCount").get(function() {
-  return this.savedVins.length;
+userSchema.virtual("plantCount").get(function () {
+  return this.savedPlants.length;
 });
+
 
 const User = model('User', userSchema);
 

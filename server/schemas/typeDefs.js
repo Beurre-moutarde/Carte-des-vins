@@ -1,59 +1,49 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-    type Vin {
-        vinId: String!
-        vin_name: String!
-        millesime: Int!
-        producteur: String!
-    }
+  type User {
+    _id: ID
+    username: String
+    email: String
+    plantCount: Int
+    savedPlants: [Plant]
+  }
 
-    type User {
-        _id: ID!
-        username: String
-        email: String!
-        vinCount: Int
-        savedVins: [Vin]
-    }
-    
-    type Data {
-        _id: ID
-        params: String!
-    }
+  type Plant {
+    plantId: String!
+    authors: [String]
+    bibliography: String
+    common_name: String
+    family: String
+    image: String
+    link: String
+  }
 
-    type Auth {
-        token: ID
-        user: User
-    }
+  type Auth {
+    token: ID!
+    user: User
+  }
 
-    type Params {
-        params: String!
-    }  
+  input PlantInput {
+    plantId: String!
+    authors: [String]
+    bibliography: String
+    common_name: String
+    family: String
+    image: String
+    link: String
+  }
 
-    input VinInput {
-        vinId: String!
-        vin_name: String!
-        millesime: Int
-        producteur: String
-    }
+  type Query {
+    me: User
+  }
 
-    input DataObj {
-        params: String!
-    }
-
-    type Query {
-        me: User
-        params: [Data]
-    }
-
-    type Mutation {
-        login(email: String!, password: String!): Auth
-        createUser(username: String! email: String!, password: String!): Auth
-        saveVin(input: VinInput): User
-        deleteVin(input: VinInput): User
-        saveData(input: DataObj): User
-        deleteData(dataID: ID): User
-    }
+  type Mutation {
+    login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    savePlant(input: PlantInput): User
+    removePlant(plantId: String!): User
+  }
 `;
 
 module.exports = typeDefs;
