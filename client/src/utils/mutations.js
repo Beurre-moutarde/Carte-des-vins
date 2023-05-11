@@ -33,11 +33,13 @@ export const SAVE_PLANT = gql`
       plantCount
       savedPlants {
         plantId
-        authors
+        author
         image
-        link
+        links
         bibliography
         family
+        year
+        observations
       }
     }
   }
@@ -51,11 +53,13 @@ export const REMOVE_PLANT = gql`
       plantCount
       savedplants {
         plantId
-        authors
+        author
         image
-        link
+        links
         bibliography
         family
+        year
+        observations
       }
     }
   }

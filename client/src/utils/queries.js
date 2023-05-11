@@ -8,12 +8,14 @@ export const GET_ME = gql`
       email
       savedPlants {
         plantId
-        authors
+        author
         bibliography
         family
+        year
+        observations
         title
         image
-        link
+        links
       }
     }
   }

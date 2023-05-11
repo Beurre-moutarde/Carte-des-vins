@@ -1,6 +1,7 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
+const fetch = require("node-fetch");
 const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require("./schemas");
@@ -21,9 +22,33 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get("/hello", (req, res) => {
-  res.send("hello")
-})
+// new endpoint for searching plants using Trefle API
+app.get("/api/plants/search", async (req, res) => {
+  const { q } = req.query;
+  const token = process.env.TREFLE_API_TOKEN;
+  console.log("TREFLE_API_TOKEN", token)
+  try {
+    const response = await fetch(`https://trefle.io/api/v1/plants/search?token=${token}&q=${q}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      mode: 'cors'
+    });
+    if (!response.ok) {
+      throw new Error("something went wrong!");
+    }
+    const data = await response.json();
+    console.log('search endpoint called');
+    res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.set("Access-Control-Allow-Methods", "GET, POST");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong!" });
+  }
+});
 
 
 app.get("/", (req, res) => {

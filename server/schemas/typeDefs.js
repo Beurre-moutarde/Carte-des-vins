@@ -11,12 +11,16 @@ const typeDefs = gql`
 
   type Plant {
     plantId: String!
-    authors: [String]
+    author: String
     bibliography: String
     common_name: String
     family: String
+    title: String
+    year: String
+    observations: String
     image: String
-    link: String
+    links: [String]
+    scientificname: String
   }
 
   type Auth {
@@ -26,12 +30,16 @@ const typeDefs = gql`
 
   input PlantInput {
     plantId: String!
-    authors: [String]
+    author: String
     bibliography: String
     common_name: String
     family: String
+    title: String
+    year: String
+    observations: String
     image: String
-    link: String
+    links: [String]
+    scientificname: String
   }
 
   type Query {

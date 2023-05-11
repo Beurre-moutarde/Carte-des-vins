@@ -4,10 +4,10 @@ const userSchema = require ('./User');
 // Définir le schéma pour la collection "Plants"
 const plantSchema = new Schema(
   {
-    authors: [{ 
+    author: { 
       type: String, 
        
-    }],
+    },
     bibliography: { 
       type: String, 
       required: true 
@@ -24,11 +24,23 @@ const plantSchema = new Schema(
       type: String,
       require: true
     },
+    title: {
+      type: String
+    },
+    year: {
+      type: String
+    },
+    observations: {
+      type: String
+    },
     image: {
       type: String,
     },
-    link: {
+    links: [{
       type: String,
+    }],
+    scientificname: {
+      type: String
     },
   },
 );

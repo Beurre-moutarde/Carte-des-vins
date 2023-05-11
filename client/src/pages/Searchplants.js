@@ -9,14 +9,30 @@ import {
   CardColumns,
 } from "react-bootstrap";
 
+// import {
+//   PageHeader,
+//   Layout,
+//   Form,
+//   Input,
+//   Button,
+//   Card,
+//   Row,
+//   Col,
+//   message,
+// } from "antd";
+// import { SearchOutlined } from "@ant-design/icons";
+
+import "../index.css";
+
 import Auth from "../utils/auth";
 import { savePlantIds, getSavedPlantIds } from "../utils/localStorage";
-
-import fetch from 'node-fetch';
 
 // import Apollo hook and mutation
 import { SAVE_PLANT } from "../utils/mutations";
 import { useMutation } from "@apollo/react-hooks";
+
+// const apiToken = process.env.TREFLE_API_TOKEN;
+// const { Meta } = Card;
 
 const SearchPlants = () => {
   // create state for holding returned google api data
@@ -26,7 +42,6 @@ const SearchPlants = () => {
   // create state to hold saved plantId values
   const [savedPlantIds, setSavedPlantIds] = useState(getSavedPlantIds());
   // set up useEffect hook to save `savedPlantIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => savePlantIds(savedPlantIds);
   });
@@ -44,25 +59,27 @@ const SearchPlants = () => {
 
     try {
       const response = await fetch(
-        `https://trefle.io/api/v1/plants?token=rcO40P3TzMX5CUatRjpNaqRQKizazKgrHgHldsHadHo${searchInput}`
+        `/api/plants/search?q=${searchInput}`
       );
 
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
 
-      const { items } = await response.json();
-
-      const plantData = items.map((plant) => ({
+      const { data }  = await response.json();
+      console.log(data)
+      const plantData = data.map((plant) => ({
         plantId: plant.id,
-        authors: plant.authors || [""],
+        author: plant.author,
         family: plant.family,
-        bibliography: plant.bibliography,
-        common_name: plant.common_name,
-        image: plant.image || "",
-        link: plant.link || "",
+        bibliography: plant.bibliography || "",
+        title: plant.common_name,
+        year: plant.year || "",
+        observations: plant.observations,
+        scientificname: plant.scientific_name,
+        image: plant.image_url || "",
       }));
-
+      // console.log(plantData.data)
       setSearchedPlants(plantData);
       setSearchInput("");
     } catch (err) {
@@ -139,6 +156,7 @@ const SearchPlants = () => {
               <Card key={plant.plantId} border="dark">
                 {plant.image ? (
                   <Card.Img
+                    className="plant-image"
                     src={plant.image}
                     alt={`The view for ${plant.title}`}
                     variant="top"
@@ -146,17 +164,19 @@ const SearchPlants = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title>{plant.title}</Card.Title>
-                  <p className="small">Authors: {plant.authors}</p>
-                  <Card.Text>{plant.description}</Card.Text>
+                  <Card.Text>Scientific Name: {plant.scientificname}</Card.Text>
+                  <Card.Text>Bibliography: {plant.bibliography}</Card.Text>
+                  <Card.Text>Family: {plant.family}</Card.Text>
+                  <Card.Text>Year: {plant.year}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedPlantIds?.some(
+                      disabled={savedPlantIds && savedPlantIds.some(
                         (savedPlantId) => savedPlantId === plant.plantId
                       )}
                       className="btn-block btn-info"
                       onClick={() => handleSavePlant(plant.plantId)}
                     >
-                      {savedPlantIds?.some(
+                      {savedPlantIds && savedPlantIds.some(
                         (savedPlantId) => savedPlantId === plant.plantId
                       )
                         ? "This plant has already been saved!"
@@ -171,6 +191,7 @@ const SearchPlants = () => {
       </Container>
     </>
   );
+   
 };
 
 export default SearchPlants;
