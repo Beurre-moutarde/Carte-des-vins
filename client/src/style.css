@@ -1,0 +1,90 @@
+/* SavedPlants.css
+
+.card-columns {
+    column-count: 1;
+  }
+  
+  .card {
+    border: none;
+    margin-bottom: 30px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+  }
+  
+  .card-img-top {
+    object-fit: cover;
+    height: 300px;
+  }
+  
+  .card-body {
+    position: relative;
+  }
+  
+  .card-title {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+  }
+  
+  .card-text {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .card-footer {
+    background-color: #f8f9fa;
+    border-top: none;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  
+  .btn-primary {
+    background-color: #72bf44;
+    border-color: #72bf44;
+    font-size: 1.5rem;
+  }
+  
+  .btn-primary:hover {
+    background-color: #619c3f;
+    border-color: #619c3f;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    font-size: 1.5rem;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+  
+  /* Mobile styles 
+  
+  @media screen and (max-width: 576px) {
+    .card-img-top {
+      height: 200px;
+    }
+  
+    .card-title {
+      font-size: 1.5rem;
+    }
+  
+    .card-text {
+      font-size: 1rem;
+    }
+  
+    .card-footer {
+      font-size: 1rem;
+    }
+  
+    .btn-primary,
+    .btn-danger {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+  } */

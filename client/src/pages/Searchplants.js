@@ -9,19 +9,6 @@ import {
   CardColumns,
 } from "react-bootstrap";
 
-// import {
-//   PageHeader,
-//   Layout,
-//   Form,
-//   Input,
-//   Button,
-//   Card,
-//   Row,
-//   Col,
-//   message,
-// } from "antd";
-// import { SearchOutlined } from "@ant-design/icons";
-
 import "../index.css";
 
 import Auth from "../utils/auth";
@@ -32,7 +19,6 @@ import { SAVE_PLANT } from "../utils/mutations";
 import { useMutation } from "@apollo/react-hooks";
 
 // const apiToken = process.env.TREFLE_API_TOKEN;
-// const { Meta } = Card;
 
 const SearchPlants = () => {
   // create state for holding returned google api data
@@ -132,10 +118,11 @@ const SearchPlants = () => {
                   type="text"
                   size="lg"
                   placeholder="Search for a plant"
+                  className="form-control"
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
+                <Button type="submit" variant="success" size="lg" className="btn-success">
                   Submit Search
                 </Button>
               </Col>
@@ -144,7 +131,7 @@ const SearchPlants = () => {
         </Container>
       </Jumbotron>
 
-      <Container>
+      <Container className="results">
         <h2>
           {searchedPlants.length
             ? `Viewing ${searchedPlants.length} results:`
@@ -153,21 +140,21 @@ const SearchPlants = () => {
         <CardColumns>
           {searchedPlants.map((plant) => {
             return (
-              <Card key={plant.plantId} border="dark">
+              <Card key={plant.plantId} border="dark" className="card">
                 {plant.image ? (
                   <Card.Img
-                    className="plant-image"
+                    className="card-img-top"
                     src={plant.image}
                     alt={`The view for ${plant.title}`}
                     variant="top"
                   />
                 ) : null}
-                <Card.Body>
-                  <Card.Title>{plant.title}</Card.Title>
-                  <Card.Text>Scientific Name: {plant.scientificname}</Card.Text>
-                  <Card.Text>Bibliography: {plant.bibliography}</Card.Text>
-                  <Card.Text>Family: {plant.family}</Card.Text>
-                  <Card.Text>Year: {plant.year}</Card.Text>
+                <Card.Body className="card-body">
+                  <Card.Title className="card-title">{plant.title}</Card.Title>
+                  <Card.Text className="card-text">Scientific Name: {plant.scientificname}</Card.Text>
+                  <Card.Text className="card-text">Bibliography: {plant.bibliography}</Card.Text>
+                  <Card.Text className="card-text">Family: {plant.family}</Card.Text>
+                  <Card.Text className="card-text">Year: {plant.year}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
                       disabled={savedPlantIds && savedPlantIds.some(
@@ -191,7 +178,6 @@ const SearchPlants = () => {
       </Container>
     </>
   );
-   
 };
 
 export default SearchPlants;
