@@ -10,13 +10,13 @@ const typeDefs = gql`
   }
 
   type Plant {
-    plantId: String!
+    plantId: Int
     author: String
     bibliography: String
     common_name: String
     family: String
     title: String
-    year: String
+    year: Int
     observations: String
     image: String
     links: [String]
@@ -29,13 +29,13 @@ const typeDefs = gql`
   }
 
   input PlantInput {
-    plantId: String!
+    plantId: Int
     author: String
     bibliography: String
     common_name: String
     family: String
     title: String
-    year: String
+    year: Int
     observations: String
     image: String
     links: [String]
@@ -50,7 +50,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     savePlant(input: PlantInput): User
-    removePlant(plantId: String!): User
+    removePlant(plantId: Int): User
   }
 `;
 

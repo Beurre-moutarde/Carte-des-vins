@@ -100,6 +100,7 @@ const SearchPlants = () => {
       setSavedPlantIds([...savedPlantIds, plantToSave.plantId]);
     } catch (err) {
       console.error(err);
+      console.log("GraphQL error:", err.graphQLErrors);
     }
   };
 

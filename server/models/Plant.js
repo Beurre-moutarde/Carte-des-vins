@@ -6,29 +6,25 @@ const plantSchema = new Schema(
   {
     author: { 
       type: String, 
-       
     },
     bibliography: { 
       type: String, 
-      required: true 
     },
     plantId: {
-      type: String,
+      type: Number,
       required: true,
     },
     common_name: { 
       type: String, 
-      required: true 
     },
     family: {
       type: String,
-      require: true
     },
     title: {
       type: String
     },
     year: {
-      type: String
+      type: Number
     },
     observations: {
       type: String

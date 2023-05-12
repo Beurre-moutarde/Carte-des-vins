@@ -34,32 +34,38 @@ export const SAVE_PLANT = gql`
       savedPlants {
         plantId
         author
-        image
-        links
         bibliography
+        common_name
         family
+        title
         year
         observations
+        image
+        links
+        scientificname
       }
     }
   }
 `;
 
 export const REMOVE_PLANT = gql`
-  mutation removePlant($plantId: String!) {
+  mutation removePlant($plantId: Int) {
     removePlant(plantId: $plantId) {
       _id
       username
       plantCount
-      savedplants {
+      savedPlants {
         plantId
         author
-        image
-        links
         bibliography
+        common_name
         family
+        title
         year
         observations
+        image
+        links
+        scientificname
       }
     }
   }
