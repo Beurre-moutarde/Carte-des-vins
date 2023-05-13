@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SearchPlants from "./pages/Searchplants";
 import SavedPlants from "./pages/Savedplants";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 // import ApolloProvider
 import {
@@ -46,6 +47,7 @@ function App() {
             <Route  path="/saved" element={<SavedPlants/>} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Routes>
+          <Footer />
         </>
       </Router>
     </ApolloProvider>
