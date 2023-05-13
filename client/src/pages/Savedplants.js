@@ -74,9 +74,15 @@ const SavedPlants = () => {
                 ) : null}
                 <Card.Body>
                   <Card.Title className="card-title">{plant.title}</Card.Title>
-                  <Card.Text className="card-text">Bibliography: {plant.bibliography}</Card.Text>
-                  <Card.Text className="card-text">Family: {plant.family}</Card.Text>
-                  <Card.Text className="card-text">Year: {plant.year}</Card.Text>
+                  <Card.Text className="card-text">
+                    Bibliography: {plant.bibliography}
+                  </Card.Text>
+                  <Card.Text className="card-text">
+                    Family: {plant.family}
+                  </Card.Text>
+                  <Card.Text className="card-text">
+                    Year: {plant.year}
+                  </Card.Text>
                   <Card.Text>{plant.description}</Card.Text>
                   <Button
                     className="btn-block btn-danger"

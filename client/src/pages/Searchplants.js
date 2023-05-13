@@ -44,16 +44,14 @@ const SearchPlants = () => {
     }
 
     try {
-      const response = await fetch(
-        `/api/plants/search?q=${searchInput}`
-      );
+      const response = await fetch(`/api/plants/search?q=${searchInput}`);
 
       if (!response.ok) {
         throw new Error("something went wrong!");
       }
 
-      const { data }  = await response.json();
-      console.log(data)
+      const { data } = await response.json();
+      console.log(data);
       const plantData = data.map((plant) => ({
         plantId: plant.id,
         author: plant.author,
@@ -76,7 +74,9 @@ const SearchPlants = () => {
   // create function to handle saving a plant to our database
   const handleSavePlant = async (plantId) => {
     // find the plant in `searchedPlants` state by the matching id
-    const plantToSave = searchedPlants.find((plant) => plant.plantId === plantId);
+    const plantToSave = searchedPlants.find(
+      (plant) => plant.plantId === plantId
+    );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -123,7 +123,12 @@ const SearchPlants = () => {
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg" className="btn-success">
+                <Button
+                  type="submit"
+                  variant="success"
+                  size="lg"
+                  className="btn-success"
+                >
                   Submit Search
                 </Button>
               </Col>
@@ -152,19 +157,31 @@ const SearchPlants = () => {
                 ) : null}
                 <Card.Body className="card-body">
                   <Card.Title className="card-title">{plant.title}</Card.Title>
-                  <Card.Text className="card-text">Scientific Name: {plant.scientificname}</Card.Text>
-                  <Card.Text className="card-text">Bibliography: {plant.bibliography}</Card.Text>
-                  <Card.Text className="card-text">Family: {plant.family}</Card.Text>
-                  <Card.Text className="card-text">Year: {plant.year}</Card.Text>
+                  <Card.Text className="card-text">
+                    Scientific Name: {plant.scientificname}
+                  </Card.Text>
+                  <Card.Text className="card-text">
+                    Bibliography: {plant.bibliography}
+                  </Card.Text>
+                  <Card.Text className="card-text">
+                    Family: {plant.family}
+                  </Card.Text>
+                  <Card.Text className="card-text">
+                    Year: {plant.year}
+                  </Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedPlantIds && savedPlantIds.some(
-                        (savedPlantId) => savedPlantId === plant.plantId
-                      )}
+                      disabled={
+                        savedPlantIds &&
+                        savedPlantIds.some(
+                          (savedPlantId) => savedPlantId === plant.plantId
+                        )
+                      }
                       className="btn-block btn-info"
                       onClick={() => handleSavePlant(plant.plantId)}
                     >
-                      {savedPlantIds && savedPlantIds.some(
+                      {savedPlantIds &&
+                      savedPlantIds.some(
                         (savedPlantId) => savedPlantId === plant.plantId
                       )
                         ? "This plant has already been saved!"
