@@ -1,6 +1,5 @@
 # Plants&Co
 
-![Plants&Co Logo](logo.png)
 
 Plants&Co is a web app designed to simplify the process of searching for plants and providing reliable plant information. Whether you're a beginner looking for the perfect indoor plant or an experienced gardener seeking specific plant details, Plants&Co is here to assist you.
 
