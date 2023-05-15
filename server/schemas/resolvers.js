@@ -15,7 +15,7 @@ const resolvers = {
       }
       throw new AuthenticationError("Not logged in");
     },
-  },  
+  },
 
   Mutation: {
     login: async (parent, { email, password }) => {
@@ -63,6 +63,6 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
   },
-}
+};
 
 module.exports = resolvers;
