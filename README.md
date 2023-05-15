@@ -1,34 +1,48 @@
-# Carte-des-vins
+# Plants&Co
 
-## Objectifs
+![Plants&Co Logo](logo.png)
 
-1. Concevoir la base de données: concevoir une base de données pour stocker les informations sur les vins. Utiliser MongoDB pour stocker les données en utilisant le schéma Mongoose. Vous pouvez créer des collections pour les régions et les vins.
+Plants&Co is a web app designed to simplify the process of searching for plants and providing reliable plant information. Whether you're a beginner looking for the perfect indoor plant or an experienced gardener seeking specific plant details, Plants&Co is here to assist you.
 
-npm packages: mongooseDB
+## Key Features
 
-User: Models each has a name, mail, password( doit contenir au moins un chiffre, au moins une lettre minuscule, au moins une lettre majuscule, au moins un caractère spécial, ne doit pas contenir d'espace, au moins 8 caractères) avis, notes
-Vin: Models each has vin_name, millesime, producteur, users notes and user avis
-Region: Models each has a name, list des vins
+- **Comprehensive Plant Search:** Explore a vast collection of plant species and easily find the plants that suit your needs.
+- **Intuitive Search Filters:** Refine your plant search based on criteria such as sunlight requirements, water needs, and growth patterns.
+- **Accurate Plant Information:** Access detailed plant descriptions, care instructions, and captivating photos to make informed decisions.
+- **Curated Guides:** Learn about plant care, propagation techniques, and troubleshooting tips through our informative guides and articles.
+- **Vibrant Gardening Community:** Connect with like-minded plant enthusiasts, exchange ideas, seek advice, and share your plant experiences.
+- **Continuous Improvement:** We value user feedback and actively work on updates and enhancements to provide the best user experience.
 
-2. Créer une API: créer une API pour accéder aux données stockées dans la base de données. Vous pouvez utiliser Node.js et Express.js pour créer l'API.
+## Installation
 
-npm packages: express, Insomnia
+1. Clone the repository: `git clone https://github.com/your-username/Plants&Co.git`
+2. Navigate to the project directory: `cd Plants&Co`
+3. Install dependencies: `npm install`
+4. Start the development server: `npm start`
+5. Open your browser and visit `http://localhost:3000` to access Plants&Co.
 
-userRoutes: userController: Get/Create/Update/Delete,
-vinRoutes: vinController: Get/Create/Update/Delete,
-regionRoutes: regionController: Get/Create/Update/Delete,
+## Technologies Used
 
-3. Concevoir l'interface utilisateur: utiliser React pour concevoir l'interface utilisateur de l'application. Vous pouvez utiliser une bibliothèque de cartographie interactive comme Mapbox pour afficher la carte de France.
+- React: Frontend JavaScript library for building user interfaces.
+- Node.js: Backend runtime environment for server-side JavaScript execution.
+- Express: Web application framework for Node.js.
+- MongoDB: Document-oriented database for storing plant data.
+- HTML5, CSS3, JavaScript: Core web technologies for building the user interface.
 
-npm packages: React, webpack
+## Contributing
 
-4. Intégrer l'API et l'interface utilisateur: intégrer l'API que vous avez créée avec l'interface utilisateur de l'application. Vous pouvez utiliser des bibliothèques telles que Axios pour faire des appels API à partir de React.
+We welcome contributions from the community to improve Plants&Co. If you have any ideas, bug reports, or feature requests, please open an issue or submit a pull request. Make sure to follow our [contribution guidelines](CONTRIBUTING.md).
 
-npm packages: axios
+## License
 
-5. Déployer l'application: enfin, vous devez déployer l'application sur un serveur. Vous pouvez utiliser des services tels que Heroku ou AWS pour déployer l'application.
+This project is licensed under the [MIT License](LICENSE).
 
-host server: Heroku
+## Contact
+
+For any inquiries or support, please email us at [support@plants&co.com](mailto:support@plants&co.com).
+
+
+We appreciate your interest in BotanicalBuddy and hope you enjoy using it!
 
 
 
