@@ -14,7 +14,7 @@ Plants&Co is a web app designed to simplify the process of searching for plants 
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/Plants&Co.git`
+1. Clone the repository: `git clone https://github.com/beurre-moutarde/Plants&Co.git`
 2. Navigate to the project directory: `cd Plants&Co`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
@@ -41,7 +41,7 @@ This project is licensed under the [MIT License](LICENSE).
 For any inquiries or support, please email us at [support@plants&co.com](mailto:support@plants&co.com).
 
 
-We appreciate your interest in BotanicalBuddy and hope you enjoy using it!
+We appreciate your interest in Plants&Co and hope you enjoy using it!
 
 
 
